@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lkunz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 16:11:00 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/10 16:11:17 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/08 10:36:37 by lkunz             #+#    #+#             */
+/*   Updated: 2018/07/11 15:53:00 by lkunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,22 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	int nb_copy;
-	int nb_size;
-
-	nb_size = 1;
 	if (n < 0)
 	{
-		ft_putchar_fd('-', fd);
 		if (n == -2147483648)
+			ft_putstr_fd("-2147483648", fd);
+		else
 		{
-			ft_putchar_fd('2', fd);
-			n += 2000000000;
+			ft_putchar_fd('-', fd);
+			ft_putnbr_fd(-n, fd);
 		}
-		n *= -1;
+		return ;
 	}
-	nb_copy = n;
-	while ((nb_copy /= 10) > 0)
+	if (n >= 10)
 	{
-		nb_size *= 10;
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10 + '0'), fd);
 	}
-	while (nb_size > 0)
-	{
-		ft_putchar_fd(n / nb_size + '0', fd);
-		n %= nb_size;
-		nb_size /= 10;
-	}
+	else
+		ft_putchar_fd((n + '0'), fd);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lsiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lkunz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/11 15:53:38 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/11 15:53:40 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/11 13:18:38 by lkunz             #+#    #+#             */
+/*   Updated: 2018/07/11 14:23:32 by lkunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	t_list *temp;
-
-	if (!lst)
+	if (!lst || !f)
 		return ;
-	temp = lst;
-	while (temp)
+	while (lst)
 	{
-		(*f)(temp);
-		temp = temp->next;
+		f(lst);
+		lst = lst->next;
 	}
 }

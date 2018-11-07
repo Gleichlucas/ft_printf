@@ -3,46 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lkunz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 21:47:23 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/10 21:47:24 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/07 22:46:12 by lkunz             #+#    #+#             */
+/*   Updated: 2018/07/10 17:41:40 by lkunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		itoa_helper(int x, char *out)
+static int		ft_itoa_size(int *n, int *negative)
 {
-	if (x)
-		out[0] = '-';
+	int cpy;
+	int size;
+
+	size = 2;
+	if (*n < 0)
+	{
+		*n *= -1;
+		*negative = 1;
+		size++;
+	}
+	cpy = *n;
+	while (cpy >= 10)
+	{
+		cpy /= 10;
+		size++;
+	}
+	return (size);
 }
 
 char			*ft_itoa(int n)
 {
-	int			val[3];
-	char		*out;
+	int			size;
+	int			negative;
+	char		*str;
 
-	val[2] = 0;
-	val[1] = 1;
-	if (n < 0 && val[1]++)
-	{
-		if (n == -2147483648)
-			return (ft_strdup("-2147483648"));
-		n *= -1;
-		val[2] = 1;
-	}
-	val[0] = n;
-	while ((val[0] /= 10) > 0)
-		val[1]++;
-	if (!(out = (char*)malloc(sizeof(*out) * (val[1] + 1))))
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	negative = 0;
+	size = ft_itoa_size(&n, &negative);
+	if (!(str = (char*)malloc(size)))
 		return (NULL);
-	out[val[1]] = '\0';
-	while (val[1]-- >= 1)
+	str[--size] = '\0';
+	while (--size > 0)
 	{
-		out[val[1]] = (n % 10) + '0';
+		str[size] = n % 10 + '0';
 		n /= 10;
 	}
-	itoa_helper(val[2], out);
-	return (out);
+	if (negative)
+		str[0] = '-';
+	else
+		str[0] = n % 10 + '0';
+	return (str);
 }

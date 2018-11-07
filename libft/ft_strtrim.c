@@ -3,45 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lkunz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 16:25:31 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/10 16:25:32 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/06 15:58:02 by lkunz             #+#    #+#             */
+/*   Updated: 2018/07/11 15:56:48 by lkunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		space(char c)
+char	*ft_strtrim(char const *s)
 {
-	return (c == ' ' || c == '\n' || c == '\t');
-}
+	unsigned int	i;
+	size_t			len;
+	char			*s1;
 
-char			*ft_strtrim(char const *s)
-{
-	int		sback;
-	int		i;
-	char	*out;
-
-	sback = 0;
 	i = 0;
 	if (!s)
 		return (NULL);
-	while (space(*s))
-		s++;
-	i = ft_strlen(s) - 1;
-	if (i == -1)
-		return (ft_strnew(0));
-	while (space(s[i--]))
-		sback++;
-	out = ft_strnew(ft_strlen(s) - sback);
-	if (!out)
-		return (NULL);
-	i = 0;
-	while (i < (int)ft_strlen(s) - sback)
-	{
-		out[i] = s[i];
+	if (!s[i])
+		return ((char *)s);
+	len = ft_strlen(s);
+	s1 = (char *)s;
+	while (s1[i] == ' ' || s1[i] == '\n' || s1[i] == '\t')
 		i++;
-	}
-	return (out);
+	if (i == (unsigned int)len)
+		return (ft_strnew(0));
+	len--;
+	while (s1[len] == ' ' || s1[len] == '\n' || s1[len] == '\t')
+		len--;
+	len++;
+	s1 = ft_strsub(s, i, len - (size_t)i);
+	return (s1);
 }

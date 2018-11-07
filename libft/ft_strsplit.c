@@ -3,85 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lkunz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 17:40:28 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/10 17:40:30 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/07 18:20:15 by lkunz             #+#    #+#             */
+/*   Updated: 2018/07/11 15:49:46 by lkunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static int		count_word(char const *str, char c)
+static int		ft_wordcounter(char const *s, char c)
 {
-	int		i;
-	int		j;
+	char	flag;
+	int		wordc;
 
+	flag = 0;
+	wordc = 0;
+	while (*s)
+	{
+		if (*s != c)
+		{
+			if (!flag)
+				wordc++;
+			flag = 1;
+		}
+		if (*(s + 1) == '\0' || *(s + 1) == c)
+			flag = 0;
+		s++;
+	}
+	return (wordc);
+}
+
+static	char	*ft_wordcutter(char const *s, char c)
+{
+	char			*word;
+	size_t			i;
+	unsigned int	start;
+	int				u;
+
+	u = 0;
 	i = 0;
-	j = 0;
-	if (!str || !c)
-		return (0);
-	while (str[i] != '\0')
+	start = 0;
+	while (s[u])
 	{
-		while (str[i] == c && str[i] != '\0')
+		if (s[u] != c)
+		{
 			i++;
-		if (str[i] != '\0')
-			j++;
-		while (str[i] != c && str[i] != '\0')
-			i++;
+			if (s[u + 1] == '\0' || s[u + 1] == c)
+			{
+				word = ft_strsub(s, start, i);
+				return (word);
+			}
+		}
+		else
+			start++;
+		u++;
 	}
-	return (j);
-}
-
-static int		append_output(int data[2], char const *str, char **out, char c)
-{
-	int x;
-
-	x = 0;
-	while (str[data[0]] != c && str[data[0]] != '\0')
-	{
-		out[data[1]][x] = str[data[0]];
-		data[0]++;
-		x++;
-	}
-	out[data[1]][x] = '\0';
-	return (data[0]);
-}
-
-static void		split_helper(char const *s, int *i, int *k, char c)
-{
-	while (s[*i] == c && s[*i] != '\0')
-		(*i)++;
-	*k = *i;
-	while (s[*k] != c && s[*k] != '\0')
-		(*k)++;
+	return (NULL);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	char	**out;
-	int		word_count;
-	int		i;
-	int		j;
-	int		k;
+	char	**arr;
+	int		wordc;
+	size_t	wordl;
+	size_t	i;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	if (!s)
+	if (s == NULL)
 		return (NULL);
-	word_count = count_word(s, c);
-	if (!(out = (char**)malloc(sizeof(*out) * (word_count + 1))))
+	wordc = ft_wordcounter(s, c);
+	if (!(arr = (char **)malloc(sizeof(char *) * wordc + 1)))
 		return (NULL);
-	while (s[i] != '\0')
+	while (wordc > 0)
 	{
-		split_helper(s, &i, &k, c);
-		if (!(out[j] = (char*)malloc(sizeof(**out) * (k - i + 1))))
-			return (NULL);
-		i = append_output((int[2]){i, j}, s, out, c);
-		if (j < word_count)
-			j++;
+		wordl = ft_strlen(ft_wordcutter(s, c));
+		if (ft_wordcutter(s, c) && (*(arr + i) = (char *)malloc(wordl)))
+			arr[i++] = ft_wordcutter(s, c);
+		while (*s == c && *s)
+			s++;
+		while (*s != c && *s)
+			s++;
+		wordc--;
 	}
-	out[j] = 0;
-	return (out);
+	*(arr + i) = NULL;
+	return (arr);
 }

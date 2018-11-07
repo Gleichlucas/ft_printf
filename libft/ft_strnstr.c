@@ -3,39 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lkunz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 23:19:06 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/10 23:19:15 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/07 14:35:03 by lkunz             #+#    #+#             */
+/*   Updated: 2018/07/11 16:01:22 by lkunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+static char	*ft_checker(const char *needle, const char *haystack, size_t len)
 {
-	char	*found;
-	size_t	val[3];
+	size_t i;
 
-	val[0] = 0;
-	val[1] = 0;
-	if (*needle == '\0')
-		return ((char *)haystack);
-	while (haystack[val[1]] != '\0' && val[1] < len)
+	i = 0;
+	while (needle[i] && i < len)
 	{
-		val[2] = val[1];
-		while (needle[val[0]] == haystack[val[2]] && val[0] + val[1] < len)
-		{
-			if (needle[val[0] + 1] == '\0')
-			{
-				found = (char *)&haystack[val[1]];
-				return (found);
-			}
-			val[0]++;
-			val[2]++;
-		}
-		val[0] = 0;
-		val[1]++;
+		if (needle[i] != haystack[i])
+			return (NULL);
+		i++;
+	}
+	if (needle[i] != '\0')
+		return (NULL);
+	return ((char *)haystack);
+}
+
+char		*ft_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	char	*check;
+	size_t	needle_len;
+
+	check = NULL;
+	if ((needle_len = ft_strlen(needle)) == 0)
+		return ((char *)haystack);
+	while (*haystack && len >= needle_len)
+	{
+		if (*needle == *haystack)
+			check = ft_checker(needle, haystack, len);
+		if (check)
+			return (check);
+		haystack++;
+		len--;
 	}
 	return (NULL);
 }

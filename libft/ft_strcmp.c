@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lkunz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 14:02:31 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/10 14:02:34 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/07 14:57:21 by lkunz             #+#    #+#             */
+/*   Updated: 2018/07/07 15:18:39 by lkunz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,17 @@
 
 int		ft_strcmp(const char *s1, const char *s2)
 {
-	unsigned char	*s1v;
-	unsigned char	*s2v;
-	size_t			i;
+	unsigned char *str1;
+	unsigned char *str2;
 
-	s1v = (unsigned char*)s1;
-	s2v = (unsigned char*)s2;
-	i = 0;
-	while (s1v[i] != '\0')
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (*str1 || *str2)
 	{
-		if (s1v[i] != s2v[i])
-			return (s1v[i] - s2v[i]);
-		i++;
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
 	}
-	if (s2v[i] != '\0')
-		return (s1v[i] - s2v[i]);
 	return (0);
 }
