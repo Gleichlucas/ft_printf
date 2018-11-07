@@ -1,4 +1,4 @@
-NAME	=	ft_printf.a
+NAME	=	libftprintf.a
 OBJECT = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 LIB = -L libft/ -lft
