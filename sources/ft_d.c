@@ -130,7 +130,7 @@ void ft_d(t_fmt *fmt, va_list *ap)
   char *buff;
   long long d = 0;
   (fmt->l.j || fmt->l.z) ? fmt->l.ll = 1: 0;
-  (fmt->type.o || fmt->type.l_o || fmt->type.u || fmt->type.l_u) ? fmt->l.ll = 1: 0;
+//  (fmt->type.o || fmt->type.l_o || fmt->type.u || fmt->type.l_u) ? fmt->l.ll = 1: 0;
   (fmt->l.l) ? (d = va_arg(*ap, long)) : 0;
   (fmt->l.ll) ? (d = va_arg(*ap, long long)) : 0;
   (!fmt->l.l && ! fmt->l.ll) ? (d = va_arg(*ap, int)) : 0;
