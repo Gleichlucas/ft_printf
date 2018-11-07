@@ -6,7 +6,7 @@
 #include <stdio.h> // just for testing!
 #include <unistd.h>
 #include <wchar.h>
-#include "libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_flags
 {
