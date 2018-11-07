@@ -51,13 +51,3 @@ void ft_printf(char *str, ...)
   }
   va_end(ap);
 }
-
-int main(void)
-{
-
-  char *buff = "abcpandaaufdembaumnospace";
-  ft_printf("%^^!~~ą, ć, or ęs\n", buff);
-  //printf("%+132s\n", buff);
-
-  return (0);
-}
