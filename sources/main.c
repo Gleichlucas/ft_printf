@@ -20,7 +20,7 @@ char *ft_set_fmt(char *str, t_fmt *fmt, va_list *ap)
   ft_set_type(str, &fmt->type);
   (fmt->type.percent) ? ft_percent(): 0;
   (fmt->type.s) ? ft_s(fmt, ap): 0;
-  // (fmt->type.l_s) ? ft_ls(fmt, ap): 0; // wide chars
+  (fmt->type.l_s) ? ft_s(fmt, ap): 0; // wide chars NOT WORKING
   (fmt->type.p) ? ft_p(fmt, ap): 0; // hex
   (fmt->type.d) ? ft_d(fmt, ap): 0;
   (fmt->type.l_d) ? ft_d(fmt, ap): 0;
@@ -32,7 +32,7 @@ char *ft_set_fmt(char *str, t_fmt *fmt, va_list *ap)
   (fmt->type.x) ? ft_x(fmt, ap): 0; // hex
   (fmt->type.l_x) ? ft_x(fmt, ap): 0;
   (fmt->type.c) ? ft_putchar(va_arg(*ap, int)): 0; // need ft_ for width and flags!
-  // (fmt->type.w_c) ? ft_w_c(fmt, ap): 0; // wide char
+  (fmt->type.w_c) ? ft_putchar(va_arg(*ap, int)): 0;//ft_w_c(fmt, ap): 0; // wide char
   return (str);
 }
 
