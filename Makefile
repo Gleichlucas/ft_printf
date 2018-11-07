@@ -1,4 +1,4 @@
-NAME	=	atest.out
+NAME	=	ft_printf.a
 OBJECT = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 LIB = -L libft/ -lft
@@ -25,9 +25,13 @@ SRCS = main.c \
 
 all: $(NAME)
 
-$(NAME) :
+$(NAME) : $(OBJECT)
 	@#make -C libft
-	@gcc $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
+	#@gcc $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
+	@ar rc $(NAME) $(OBJECT)
+	@ranlib $(NAME)
+	$(OBJECT): $(SRC)
+	@gcc $(CFLAGS) -c $(SRC) $(LIB) $(INC)
 
 clean:
 	@#make -C libft/ clean
@@ -36,5 +40,3 @@ clean:
 fclean: clean
 	@#make -C libft/ fclean
 	@rm -f $(NAME)
-
-re: fclean all
